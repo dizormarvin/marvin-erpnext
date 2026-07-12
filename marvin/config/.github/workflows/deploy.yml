@@ -1,0 +1,20 @@
+name: Deploy to GCP Server
+
+on:
+  push:
+    branches:
+      - version-16
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.GCP_HOST }}
+          username: frappe
+          key: ${{ secrets.GCP_SSH_KEY }}
+          script: |
+            cd ~/frappe-bench
+            bench update --apps marvin --no-backup
