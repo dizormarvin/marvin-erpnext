@@ -3,7 +3,7 @@
 
 frappe.ui.form.on("Marvin Doctype", {
 	refresh(frm) {
-        frappe.throw("tesst");
+        frappe.throw("tess2t");
         
 	},
 
