@@ -8,6 +8,6 @@ frappe.ui.form.on("Marvin Doctype", {
 	},
 
     data_1(frm) {
-        console.log('marvin')
+        console.log('marvins')
     },
 });
