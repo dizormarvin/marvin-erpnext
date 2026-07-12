@@ -16,5 +16,17 @@ jobs:
           username: frappe
           key: ${{ secrets.GCP_SSH_KEY }}
           script: |
-            cd ~/frappe-bench
-            bench update --apps marvin --no-backup
+            # Load environment variables for your user profile
+            export PATH=$PATH:/home/marvindizor08/.local/bin
+            
+            # Navigate directly to the app's git folder under your home directory
+            cd /home/marvindizor08/frappe-bench/apps/marvin
+            
+            # Force Git to sync with GitHub exactly
+            git fetch origin version-16
+            git reset --hard origin/version-16
+            
+            # Clear cache and build the production assets
+            cd /home/marvindizor08/frappe-bench
+            bench clear-cache
+            bench build --app marvin
