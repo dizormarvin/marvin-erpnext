@@ -16,13 +16,14 @@ jobs:
           username: frappe
           key: ${{ secrets.GCP_SSH_KEY }}
           script: |
-            # 1. Explicitly load NVM and activate Node 24
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm use 24
+            # 1. Hardcode the path to the NVM Node v24 binary so it overrides system Node
+            export PATH=/home/frappe/.nvm/versions/node/v24.18.0/bin:$PATH
             
-            # Set path variables for the frappe user environment
+            # Set other standard path variables for the frappe user environment
             export PATH=$PATH:/home/frappe/.local/bin:/usr/local/bin
+            
+            # Verify the version printed in the log is 24
+            node -v
             
             # 2. Navigate to the app folder to sync the code
             cd /home/frappe/frappe-bench/apps/marvin
