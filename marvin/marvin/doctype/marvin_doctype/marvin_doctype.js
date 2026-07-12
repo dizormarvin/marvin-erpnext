@@ -11,4 +11,3 @@ frappe.ui.form.on("Marvin Doctype", {
         console.log('marviaans')
     },
 });
-x
