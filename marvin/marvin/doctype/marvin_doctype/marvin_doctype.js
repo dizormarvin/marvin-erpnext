@@ -6,4 +6,8 @@ frappe.ui.form.on("Marvin Doctype", {
         frappe.throw("tesst");
         
 	},
+
+    data_1(frm) {
+        console.log('marvin')
+    },
 });
