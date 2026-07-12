@@ -16,17 +16,22 @@ jobs:
           username: frappe
           key: ${{ secrets.GCP_SSH_KEY }}
           script: |
-            # Set the path variables for the frappe user
+            # 1. Explicitly load NVM and activate Node 24
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use 24
+            
+            # Set path variables for the frappe user environment
             export PATH=$PATH:/home/frappe/.local/bin:/usr/local/bin
             
-            # 1. Navigate to the app folder to sync the code
+            # 2. Navigate to the app folder to sync the code
             cd /home/frappe/frappe-bench/apps/marvin
             
             # Force overwrite local files with your GitHub code
             git fetch origin version-16
             git reset --hard origin/version-16
             
-            # 2. Go to the bench root to clear cache and compile assets
+            # 3. Go to the bench root to clear cache and compile assets
             cd /home/frappe/frappe-bench
             bench clear-cache
             bench build --app marvin
