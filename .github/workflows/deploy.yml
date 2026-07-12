@@ -1,0 +1,32 @@
+name: Deploy to GCP Server
+
+on:
+  push:
+    branches:
+      - version-16
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.GCP_HOST }}
+          username: frappe
+          key: ${{ secrets.GCP_SSH_KEY }}
+          script: |
+            # Set the path variables for the frappe user
+            export PATH=$PATH:/home/frappe/.local/bin:/usr/local/bin
+            
+            # 1. Navigate to the app folder to sync the code
+            cd /home/frappe/frappe-bench/apps/marvin
+            
+            # Force overwrite local files with your GitHub code
+            git fetch origin version-16
+            git reset --hard origin/version-16
+            
+            # 2. Go to the bench root to clear cache and compile assets
+            cd /home/frappe/frappe-bench
+            bench clear-cache
+            bench build --app marvin
