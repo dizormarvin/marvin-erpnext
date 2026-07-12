@@ -3,11 +3,11 @@
 
 frappe.ui.form.on("Marvin Doctype", {
 	refresh(frm) {
-        frappe.throw("tess2t");
+        //frappe.throw("tess2t");
         
 	},
 
     data_1(frm) {
-        console.log('marvins')
+        console.log('marviaans')
     },
 });
